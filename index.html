@@ -1,65 +1,20 @@
--- Create the database
-CREATE DATABASE HostelManagement;
-
-USE HostelManagement;
-
--- Table for storing student records
-CREATE TABLE Students (
-    student_id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100),
-    age INT,
-    gender VARCHAR(10),
-    address VARCHAR(255),
-    contact_number VARCHAR(15),
-    email VARCHAR(100),
-    admission_date DATE,
-    hostel_id INT
-);
-
--- Table for storing room details
-CREATE TABLE Rooms (
-    room_id INT PRIMARY KEY AUTO_INCREMENT,
-    room_number VARCHAR(10),
-    room_type VARCHAR(20),
-    capacity INT,
-    is_available BOOLEAN DEFAULT TRUE
-);
-
--- Table for room allocation
-CREATE TABLE RoomAllocation (
-    allocation_id INT PRIMARY KEY AUTO_INCREMENT,
-    student_id INT,
-    room_id INT,
-    allocation_date DATE,
-    FOREIGN KEY (student_id) REFERENCES Students(student_id),
-    FOREIGN KEY (room_id) REFERENCES Rooms(room_id)
-);
-
--- Table for storing fee payment details
-CREATE TABLE FeePayments (
-    payment_id INT PRIMARY KEY AUTO_INCREMENT,
-    student_id INT,
-    payment_date DATE,
-    amount DECIMAL(10, 2),
-    payment_mode VARCHAR(20), -- e.g., Cash, Card, Online
-    FOREIGN KEY (student_id) REFERENCES Students(student_id)
-);
-
--- Table for storing mess information
-CREATE TABLE Mess (
-    mess_id INT PRIMARY KEY AUTO_INCREMENT,
-    student_id INT,
-    mess_fee DECIMAL(10, 2),
-    mess_status BOOLEAN DEFAULT TRUE, -- TRUE means active mess
-    FOREIGN KEY (student_id) REFERENCES Students(student_id)
-);
-
--- Table for hostel transactions
-CREATE TABLE HostelTransactions (
-    transaction_id INT PRIMARY KEY AUTO_INCREMENT,
-    student_id INT,
-    transaction_type VARCHAR(50), -- e.g., Fee Payment, Mess Payment
-    amount DECIMAL(10, 2),
-    transaction_date DATE,
-    FOREIGN KEY (student_id) REFERENCES Students(student_id)
-);
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add New Student</title>
+</head>
+<body>
+    <h2>Add New Student</h2>
+    <form action="add_student.php" method="POST">
+        Name: <input type="text" name="name" required><br><br>
+        Age: <input type="number" name="age" required><br><br>
+        Gender: <input type="text" name="gender" required><br><br>
+        Address: <input type="text" name="address" required><br><br>
+        Contact Number: <input type="text" name="contact_number" required><br><br>
+        Email: <input type="email" name="email" required><br><br>
+        Admission Date: <input type="date" name="admission_date" required><br><br>
+        Hostel ID: <input type="number" name="hostel_id" required><br><br>
+        <input type="submit" value="Add Student">
+    </form>
+</body>
+</html>
