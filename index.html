@@ -97,7 +97,7 @@
             }
         }
 
-        /* Info Display for Student and Staff */
+        /* Info Display for Staff */
         .info-container {
             max-width: 500px;
             margin: 20px auto;
@@ -117,26 +117,12 @@
 <body>
     <!-- Tabs for Student and Staff Portal -->
     <div class="tabs">
-        <button class="tab-button active-tab" id="student-tab" onclick="toggleTab('student')">Student Portal</button>
-        <button class="tab-button" id="staff-tab" onclick="toggleTab('staff')">Staff Portal</button>
-    </div>
-
-    <!-- Student Login Form -->
-    <div id="student-form" class="form-container">
-        <h2>Student Login</h2>
-        <form action="student_login.php" method="POST" onsubmit="return studentLogin(event)">
-            <label for="student_email">Email:</label>
-            <input type="email" name="student_email" required><br>
-
-            <label for="student_password">Password:</label>
-            <input type="password" name="student_password" required><br>
-
-            <input type="submit" value="Login">
-        </form>
+        <button class="tab-button" id="student-tab" onclick="toggleTab('student')">Student Portal</button>
+        <button class="tab-button active-tab" id="staff-tab" onclick="toggleTab('staff')">Staff Portal</button>
     </div>
 
     <!-- Staff Login Form -->
-    <div id="staff-form" class="form-container" style="display:none;">
+    <div id="staff-form" class="form-container" style="display:block;">
         <h2>Staff Login</h2>
         <form action="staff_login.php" method="POST" onsubmit="return staffLogin(event)">
             <label for="staff_email">Email:</label>
@@ -149,70 +135,49 @@
         </form>
     </div>
 
-    <!-- Student Information Display -->
-    <div id="student-info" class="info-container">
-        <h2>Welcome Student!</h2>
-        <p>Hostel Fee Payment Status: <span id="fee-status">Paid</span></p>
-        <p>Mess Bill Status: <span id="mess-status">Pending</span></p>
-    </div>
-
     <!-- Staff Information Display -->
     <div id="staff-info" class="info-container">
         <h2>Welcome Staff!</h2>
         <p>Total Number of Students: <span id="total-students">200</span></p>
         <p>Number of Vacant Rooms: <span id="vacant-rooms">15</span></p>
         <p>Number of Full Rooms: <span id="full-rooms">25</span></p>
+
+        <!-- New Student Form -->
+        <h3>Add New Student</h3>
+        <form action="/add_student" method="POST" id="add-student-form">
+            <label for="student_name">Student Name:</label>
+            <input type="text" name="student_name" required><br>
+
+            <label for="student_email">Email:</label>
+            <input type="email" name="student_email" required><br>
+
+            <label for="student_course">Course:</label>
+            <input type="text" name="student_course" required><br>
+
+            <label for="student_room">Room Number:</label>
+            <input type="text" name="student_room" required><br>
+
+            <input type="submit" value="Add Student">
+        </form>
     </div>
 
-    <!-- JavaScript to Handle Tab Switching and Login -->
     <script>
         function toggleTab(tab) {
             if (tab === 'student') {
                 document.getElementById('student-form').style.display = 'block';
                 document.getElementById('staff-form').style.display = 'none';
-                document.getElementById('student-tab').classList.add('active-tab');
-                document.getElementById('staff-tab').classList.remove('active-tab');
-                document.getElementById('student-info').style.display = 'none';
                 document.getElementById('staff-info').style.display = 'none';
             } else if (tab === 'staff') {
-                document.getElementById('staff-form').style.display = 'block';
-                document.getElementById('student-form').style.display = 'none';
-                document.getElementById('staff-tab').classList.add('active-tab');
-                document.getElementById('student-tab').classList.remove('active-tab');
-                document.getElementById('student-info').style.display = 'none';
-                document.getElementById('staff-info').style.display = 'none';
+                document.getElementById('staff-form').style.display = 'none';
+                document.getElementById('staff-info').style.display = 'block';
             }
-        }
-
-        function studentLogin(event) {
-            event.preventDefault(); // Prevent the form from submitting for simulation purposes
-
-            // Simulate successful login and display student info
-            document.getElementById('student-info').style.display = 'block';
-            document.getElementById('student-form').style.display = 'none';
-
-            // You can replace these with dynamic data later
-            document.getElementById('fee-status').innerText = 'Paid';
-            document.getElementById('mess-status').innerText = 'Pending';
-
-            return false; // Prevent actual form submission
         }
 
         function staffLogin(event) {
             event.preventDefault(); // Prevent the form from submitting for simulation purposes
-
-            // Simulate successful login and display staff info
             document.getElementById('staff-info').style.display = 'block';
-            document.getElementById('staff-form').style.display = 'none';
-
-            // You can replace these with dynamic data later
-            document.getElementById('total-students').innerText = '200';
-            document.getElementById('vacant-rooms').innerText = '15';
-            document.getElementById('full-rooms').innerText = '25';
-
             return false; // Prevent actual form submission
         }
     </script>
 </body>
 </html>
-
