@@ -1,20 +1,180 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Add New Student</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Student / Staff Portal</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            background-color: #4CAF50;
+            padding: 10px;
+        }
+
+        .tab-button {
+            background-color: #fff;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .tab-button:hover {
+            background-color: #ddd;
+        }
+
+        .active-tab {
+            background-color: #45a049;
+            color: white;
+        }
+
+        /* Forms */
+        form {
+            max-width: 500px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="number"], input[type="email"], input[type="date"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            .tab-button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h2>Add New Student</h2>
-    <form action="add_student.php" method="POST">
-        Name: <input type="text" name="name" required><br><br>
-        Age: <input type="number" name="age" required><br><br>
-        Gender: <input type="text" name="gender" required><br><br>
-        Address: <input type="text" name="address" required><br><br>
-        Contact Number: <input type="text" name="contact_number" required><br><br>
-        Email: <input type="email" name="email" required><br><br>
-        Admission Date: <input type="date" name="admission_date" required><br><br>
-        Hostel ID: <input type="number" name="hostel_id" required><br><br>
-        <input type="submit" value="Add Student">
-    </form>
+    <!-- Tabs for Student and Staff Portal -->
+    <div class="tabs">
+        <button class="tab-button active-tab" id="student-tab" onclick="toggleTab('student')">Student Portal</button>
+        <button class="tab-button" id="staff-tab" onclick="toggleTab('staff')">Staff Portal</button>
+    </div>
+
+    <!-- Student Portal Form -->
+    <div id="student-form" class="form-container">
+        <h2>Add New Student</h2>
+        <form action="add_student.php" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" name="name" required><br>
+
+            <label for="age">Age:</label>
+            <input type="number" name="age" required><br>
+
+            <label for="gender">Gender:</label>
+            <input type="text" name="gender" required><br>
+
+            <label for="address">Address:</label>
+            <input type="text" name="address" required><br>
+
+            <label for="contact_number">Contact Number:</label>
+            <input type="text" name="contact_number" required><br>
+
+            <label for="email">Email:</label>
+            <input type="email" name="email" required><br>
+
+            <label for="admission_date">Admission Date:</label>
+            <input type="date" name="admission_date" required><br>
+
+            <label for="hostel_id">Hostel ID:</label>
+            <input type="number" name="hostel_id" required><br>
+
+            <input type="submit" value="Add Student">
+        </form>
+    </div>
+
+    <!-- Staff Portal Form -->
+    <div id="staff-form" class="form-container" style="display:none;">
+        <h2>Add New Staff</h2>
+        <form action="add_staff.php" method="POST">
+            <label for="staff_name">Name:</label>
+            <input type="text" name="staff_name" required><br>
+
+            <label for="staff_designation">Designation:</label>
+            <input type="text" name="staff_designation" required><br>
+
+            <label for="staff_contact">Contact Number:</label>
+            <input type="text" name="staff_contact" required><br>
+
+            <label for="staff_email">Email:</label>
+            <input type="email" name="staff_email" required><br>
+
+            <label for="staff_salary">Salary:</label>
+            <input type="number" name="staff_salary" required><br>
+
+            <input type="submit" value="Add Staff">
+        </form>
+    </div>
+
+    <!-- JavaScript to Handle Tab Switching -->
+    <script>
+        function toggleTab(tab) {
+            if (tab === 'student') {
+                document.getElementById('student-form').style.display = 'block';
+                document.getElementById('staff-form').style.display = 'none';
+                document.getElementById('student-tab').classList.add('active-tab');
+                document.getElementById('staff-tab').classList.remove('active-tab');
+            } else if (tab === 'staff') {
+                document.getElementById('staff-form').style.display = 'block';
+                document.getElementById('student-form').style.display = 'none';
+                document.getElementById('staff-tab').classList.add('active-tab');
+                document.getElementById('student-tab').classList.remove('active-tab');
+            }
+        }
+    </script>
 </body>
 </html>
