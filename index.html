@@ -96,6 +96,22 @@
                 margin-bottom: 10px;
             }
         }
+
+        /* Info Display for Student and Staff */
+        .info-container {
+            max-width: 500px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .info-container p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -108,7 +124,7 @@
     <!-- Student Login Form -->
     <div id="student-form" class="form-container">
         <h2>Student Login</h2>
-        <form action="student_login.php" method="POST">
+        <form action="student_login.php" method="POST" onsubmit="return studentLogin(event)">
             <label for="student_email">Email:</label>
             <input type="email" name="student_email" required><br>
 
@@ -122,7 +138,7 @@
     <!-- Staff Login Form -->
     <div id="staff-form" class="form-container" style="display:none;">
         <h2>Staff Login</h2>
-        <form action="staff_login.php" method="POST">
+        <form action="staff_login.php" method="POST" onsubmit="return staffLogin(event)">
             <label for="staff_email">Email:</label>
             <input type="email" name="staff_email" required><br>
 
@@ -133,7 +149,22 @@
         </form>
     </div>
 
-    <!-- JavaScript to Handle Tab Switching -->
+    <!-- Student Information Display -->
+    <div id="student-info" class="info-container">
+        <h2>Welcome Student!</h2>
+        <p>Hostel Fee Payment Status: <span id="fee-status">Paid</span></p>
+        <p>Mess Bill Status: <span id="mess-status">Pending</span></p>
+    </div>
+
+    <!-- Staff Information Display -->
+    <div id="staff-info" class="info-container">
+        <h2>Welcome Staff!</h2>
+        <p>Total Number of Students: <span id="total-students">200</span></p>
+        <p>Number of Vacant Rooms: <span id="vacant-rooms">15</span></p>
+        <p>Number of Full Rooms: <span id="full-rooms">25</span></p>
+    </div>
+
+    <!-- JavaScript to Handle Tab Switching and Login -->
     <script>
         function toggleTab(tab) {
             if (tab === 'student') {
@@ -141,13 +172,47 @@
                 document.getElementById('staff-form').style.display = 'none';
                 document.getElementById('student-tab').classList.add('active-tab');
                 document.getElementById('staff-tab').classList.remove('active-tab');
+                document.getElementById('student-info').style.display = 'none';
+                document.getElementById('staff-info').style.display = 'none';
             } else if (tab === 'staff') {
                 document.getElementById('staff-form').style.display = 'block';
                 document.getElementById('student-form').style.display = 'none';
                 document.getElementById('staff-tab').classList.add('active-tab');
                 document.getElementById('student-tab').classList.remove('active-tab');
+                document.getElementById('student-info').style.display = 'none';
+                document.getElementById('staff-info').style.display = 'none';
             }
+        }
+
+        function studentLogin(event) {
+            event.preventDefault(); // Prevent the form from submitting for simulation purposes
+
+            // Simulate successful login and display student info
+            document.getElementById('student-info').style.display = 'block';
+            document.getElementById('student-form').style.display = 'none';
+
+            // You can replace these with dynamic data later
+            document.getElementById('fee-status').innerText = 'Paid';
+            document.getElementById('mess-status').innerText = 'Pending';
+
+            return false; // Prevent actual form submission
+        }
+
+        function staffLogin(event) {
+            event.preventDefault(); // Prevent the form from submitting for simulation purposes
+
+            // Simulate successful login and display staff info
+            document.getElementById('staff-info').style.display = 'block';
+            document.getElementById('staff-form').style.display = 'none';
+
+            // You can replace these with dynamic data later
+            document.getElementById('total-students').innerText = '200';
+            document.getElementById('vacant-rooms').innerText = '15';
+            document.getElementById('full-rooms').innerText = '25';
+
+            return false; // Prevent actual form submission
         }
     </script>
 </body>
 </html>
+
