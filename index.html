@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add New Student / Staff Portal</title>
+    <title>Login Portal</title>
     <style>
         /* Global Styles */
         body {
@@ -63,7 +63,7 @@
             font-weight: bold;
         }
 
-        input[type="text"], input[type="number"], input[type="email"], input[type="date"], input[type="password"] {
+        input[type="text"], input[type="email"], input[type="password"] {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
@@ -105,58 +105,31 @@
         <button class="tab-button" id="staff-tab" onclick="toggleTab('staff')">Staff Portal</button>
     </div>
 
-    <!-- Student Portal Form -->
+    <!-- Student Login Form -->
     <div id="student-form" class="form-container">
-        <h2>Add New Student</h2>
-        <form action="add_student.php" method="POST">
-            <label for="name">Name:</label>
-            <input type="text" name="name" required><br>
+        <h2>Student Login</h2>
+        <form action="student_login.php" method="POST">
+            <label for="student_email">Email:</label>
+            <input type="email" name="student_email" required><br>
 
-            <label for="age">Age:</label>
-            <input type="number" name="age" required><br>
+            <label for="student_password">Password:</label>
+            <input type="password" name="student_password" required><br>
 
-            <label for="gender">Gender:</label>
-            <input type="text" name="gender" required><br>
-
-            <label for="address">Address:</label>
-            <input type="text" name="address" required><br>
-
-            <label for="contact_number">Contact Number:</label>
-            <input type="text" name="contact_number" required><br>
-
-            <label for="email">Email:</label>
-            <input type="email" name="email" required><br>
-
-            <label for="admission_date">Admission Date:</label>
-            <input type="date" name="admission_date" required><br>
-
-            <label for="hostel_id">Hostel ID:</label>
-            <input type="number" name="hostel_id" required><br>
-
-            <input type="submit" value="Add Student">
+            <input type="submit" value="Login">
         </form>
     </div>
 
-    <!-- Staff Portal Form -->
+    <!-- Staff Login Form -->
     <div id="staff-form" class="form-container" style="display:none;">
-        <h2>Add New Staff</h2>
-        <form action="add_staff.php" method="POST">
-            <label for="staff_name">Name:</label>
-            <input type="text" name="staff_name" required><br>
-
-            <label for="staff_designation">Designation:</label>
-            <input type="text" name="staff_designation" required><br>
-
-            <label for="staff_contact">Contact Number:</label>
-            <input type="text" name="staff_contact" required><br>
-
+        <h2>Staff Login</h2>
+        <form action="staff_login.php" method="POST">
             <label for="staff_email">Email:</label>
             <input type="email" name="staff_email" required><br>
 
-            <label for="staff_salary">Salary:</label>
-            <input type="number" name="staff_salary" required><br>
+            <label for="staff_password">Password:</label>
+            <input type="password" name="staff_password" required><br>
 
-            <input type="submit" value="Add Staff">
+            <input type="submit" value="Login">
         </form>
     </div>
 
