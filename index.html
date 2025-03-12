@@ -3,181 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Portal</title>
-    <style>
-        /* Global Styles */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
-
-        h2 {
-            text-align: center;
-            margin-top: 20px;
-            color: #333;
-        }
-
-        /* Tabs */
-        .tabs {
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
-            background-color: #4CAF50;
-            padding: 10px;
-        }
-
-        .tab-button {
-            background-color: #fff;
-            padding: 10px 20px;
-            margin: 0 10px;
-            border: 1px solid #ccc;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-
-        .tab-button:hover {
-            background-color: #ddd;
-        }
-
-        .active-tab {
-            background-color: #45a049;
-            color: white;
-        }
-
-        /* Forms */
-        form {
-            max-width: 500px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            display: block;
-            margin: 10px 0 5px;
-            font-weight: bold;
-        }
-
-        input[type="text"], input[type="email"], input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            .tabs {
-                flex-direction: column;
-            }
-            .tab-button {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-        }
-
-        /* Info Display for Staff */
-        .info-container {
-            max-width: 500px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none;
-        }
-
-        .info-container p {
-            font-size: 18px;
-            margin: 10px 0;
-        }
-    </style>
+    <title>Staff Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> <!-- Optional CSS -->
 </head>
 <body>
-    <!-- Tabs for Student and Staff Portal -->
-    <div class="tabs">
-        <button class="tab-button" id="student-tab" onclick="toggleTab('student')">Student Portal</button>
-        <button class="tab-button active-tab" id="staff-tab" onclick="toggleTab('staff')">Staff Portal</button>
-    </div>
+    <h1>Staff Portal - Add Student</h1>
 
-    <!-- Staff Login Form -->
-    <div id="staff-form" class="form-container" style="display:block;">
-        <h2>Staff Login</h2>
-        <form action="staff_login.php" method="POST" onsubmit="return staffLogin(event)">
-            <label for="staff_email">Email:</label>
-            <input type="email" name="staff_email" required><br>
+    <form id="student-form">
+        <label for="student_name">Name:</label>
+        <input type="text" id="student_name" name="student_name" required>
+        <br><br>
 
-            <label for="staff_password">Password:</label>
-            <input type="password" name="staff_password" required><br>
+        <label for="student_email">Email:</label>
+        <input type="email" id="student_email" name="student_email" required>
+        <br><br>
 
-            <input type="submit" value="Login">
-        </form>
-    </div>
+        <label for="student_course">Course:</label>
+        <input type="text" id="student_course" name="student_course" required>
+        <br><br>
 
-    <!-- Staff Information Display -->
-    <div id="staff-info" class="info-container">
-        <h2>Welcome Staff!</h2>
-        <p>Total Number of Students: <span id="total-students">200</span></p>
-        <p>Number of Vacant Rooms: <span id="vacant-rooms">15</span></p>
-        <p>Number of Full Rooms: <span id="full-rooms">25</span></p>
+        <button type="submit">Add Student</button>
+    </form>
 
-        <!-- New Student Form -->
-        <h3>Add New Student</h3>
-        <form action="/add_student" method="POST" id="add-student-form">
-            <label for="student_name">Student Name:</label>
-            <input type="text" name="student_name" required><br>
-
-            <label for="student_email">Email:</label>
-            <input type="email" name="student_email" required><br>
-
-            <label for="student_course">Course:</label>
-            <input type="text" name="student_course" required><br>
-
-            <label for="student_room">Room Number:</label>
-            <input type="text" name="student_room" required><br>
-
-            <input type="submit" value="Add Student">
-        </form>
-    </div>
+    <h2 id="response-message"></h2>
 
     <script>
-        function toggleTab(tab) {
-            if (tab === 'student') {
-                document.getElementById('student-form').style.display = 'block';
-                document.getElementById('staff-form').style.display = 'none';
-                document.getElementById('staff-info').style.display = 'none';
-            } else if (tab === 'staff') {
-                document.getElementById('staff-form').style.display = 'none';
-                document.getElementById('staff-info').style.display = 'block';
-            }
-        }
+        // JavaScript to handle form submission via AJAX
+        document.getElementById('student-form').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-        function staffLogin(event) {
-            event.preventDefault(); // Prevent the form from submitting for simulation purposes
-            document.getElementById('staff-info').style.display = 'block';
-            return false; // Prevent actual form submission
-        }
+            const formData = new FormData(this);
+            fetch('/add_student', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                const message = data.message;
+                document.getElementById('response-message').innerHTML = message + '<br>' + JSON.stringify(data.student);
+                document.getElementById('student-form').reset();  // Reset form after submission
+            })
+            .catch(error => {
+                document.getElementById('response-message').innerHTML = "An error occurred!";
+                console.error(error);
+            });
+        });
     </script>
 </body>
 </html>
