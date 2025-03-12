@@ -67,6 +67,13 @@
             color: green;
             text-align: center;
         }
+
+        .welcome-message {
+            text-align: center;
+            font-size: 18px;
+            color: green;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -75,71 +82,76 @@
     <!-- Container for both Student and Staff login forms -->
     <div class="login-container">
 
-        <!-- Student Login Form -->
-        <div class="login-form" id="student-login-form">
-            <h2>Student Login</h2>
-            <form id="student-form">
-                <label for="student-username">Username:</label>
-                <input type="text" id="student-username" name="username" required>
-                <label for="student-password">Password:</label>
-                <input type="password" id="student-password" name="password" required>
-                <button type="submit">Login</button>
-            </form>
-            <div class="message" id="student-message"></div>
-        </div>
+        <!-- Login Form -->
+        <div class="login-form">
+            <h2>Login</h2>
 
-        <!-- Staff Login Form -->
-        <div class="login-form" id="staff-login-form">
-            <h2>Staff Login</h2>
-            <form id="staff-form">
-                <label for="staff-username">Username:</label>
-                <input type="text" id="staff-username" name="username" required>
-                <label for="staff-password">Password:</label>
-                <input type="password" id="staff-password" name="password" required>
+            <!-- Login Type Selection -->
+            <div>
+                <label for="login-type">Choose Login Type:</label>
+                <select id="login-type">
+                    <option value="student">Student</option>
+                    <option value="staff">Staff</option>
+                </select>
+            </div>
+
+            <!-- Username and Password Form -->
+            <form id="login-form">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
                 <button type="submit">Login</button>
             </form>
-            <div class="message" id="staff-message"></div>
+
+            <div class="message" id="login-message"></div>
         </div>
 
     </div>
 
+    <!-- Welcome Message -->
+    <div class="welcome-message" id="welcome-message" style="display: none;"></div>
+
     <script>
-        // Handle Student Login Form Submission
-        document.getElementById('student-form').addEventListener('submit', function(event) {
+        // Handle Login Form Submission
+        document.getElementById('login-form').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            const studentUsername = document.getElementById('student-username').value;
-            const studentPassword = document.getElementById('student-password').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const loginType = document.getElementById('login-type').value;
 
-            // Simulate an AJAX request to backend (You can replace this with actual backend request)
-            setTimeout(() => {
-                if (studentUsername === "student" && studentPassword === "student123") {
-                    document.getElementById('student-message').textContent = "Student login successful!";
-                    document.getElementById('student-message').style.color = "green";
+            // Set the appropriate URL based on the login type
+            const url = `/${loginType}_login`;
+
+            // Send login request to the server
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Display welcome message
+                    document.getElementById('login-message').textContent = "";
+                    document.getElementById('welcome-message').style.display = 'block';
+                    document.getElementById('welcome-message').textContent = `Welcome, ${username}! You have logged in as a ${loginType.charAt(0).toUpperCase() + loginType.slice(1)}.`;
+                    document.getElementById('login-form').reset();  // Reset the form after successful login
                 } else {
-                    document.getElementById('student-message').textContent = "Invalid username or password!";
-                    document.getElementById('student-message').style.color = "red";
+                    document.getElementById('login-message').textContent = "Invalid username or password!";
+                    document.getElementById('login-message').style.color = "red";
                 }
-            }, 1000);
-        });
-
-        // Handle Staff Login Form Submission
-        document.getElementById('staff-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const staffUsername = document.getElementById('staff-username').value;
-            const staffPassword = document.getElementById('staff-password').value;
-
-            // Simulate an AJAX request to backend (You can replace this with actual backend request)
-            setTimeout(() => {
-                if (staffUsername === "staff" && staffPassword === "staff123") {
-                    document.getElementById('staff-message').textContent = "Staff login successful!";
-                    document.getElementById('staff-message').style.color = "green";
-                } else {
-                    document.getElementById('staff-message').textContent = "Invalid username or password!";
-                    document.getElementById('staff-message').style.color = "red";
-                }
-            }, 1000);
+            })
+            .catch(error => {
+                document.getElementById('login-message').textContent = "Error during login.";
+                document.getElementById('login-message').style.color = "red";
+            });
         });
     </script>
 </body>
