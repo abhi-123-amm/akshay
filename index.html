@@ -3,50 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Portal</title>
+    <title>Login Portal</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> <!-- Optional CSS -->
+    <style>
+        /* Basic styling for both login forms */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: 50px;
+        }
+
+        .login-form {
+            width: 300px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-form h2 {
+            text-align: center;
+        }
+
+        .login-form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .login-form button:hover {
+            background-color: #45a049;
+        }
+
+        .login-form .message {
+            margin-top: 10px;
+            color: green;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>Staff Portal - Add Student</h1>
+    <h1>Login Portal</h1>
 
-    <form id="student-form">
-        <label for="student_name">Name:</label>
-        <input type="text" id="student_name" name="student_name" required>
-        <br><br>
+    <!-- Container for both Student and Staff login forms -->
+    <div class="login-container">
 
-        <label for="student_email">Email:</label>
-        <input type="email" id="student_email" name="student_email" required>
-        <br><br>
+        <!-- Student Login Form -->
+        <div class="login-form" id="student-login-form">
+            <h2>Student Login</h2>
+            <form id="student-form">
+                <label for="student-username">Username:</label>
+                <input type="text" id="student-username" name="username" required>
+                <label for="student-password">Password:</label>
+                <input type="password" id="student-password" name="password" required>
+                <button type="submit">Login</button>
+            </form>
+            <div class="message" id="student-message"></div>
+        </div>
 
-        <label for="student_course">Course:</label>
-        <input type="text" id="student_course" name="student_course" required>
-        <br><br>
+        <!-- Staff Login Form -->
+        <div class="login-form" id="staff-login-form">
+            <h2>Staff Login</h2>
+            <form id="staff-form">
+                <label for="staff-username">Username:</label>
+                <input type="text" id="staff-username" name="username" required>
+                <label for="staff-password">Password:</label>
+                <input type="password" id="staff-password" name="password" required>
+                <button type="submit">Login</button>
+            </form>
+            <div class="message" id="staff-message"></div>
+        </div>
 
-        <button type="submit">Add Student</button>
-    </form>
-
-    <h2 id="response-message"></h2>
+    </div>
 
     <script>
-        // JavaScript to handle form submission via AJAX
+        // Handle Student Login Form Submission
         document.getElementById('student-form').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            const formData = new FormData(this);
-            fetch('/add_student', {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.json())
-            .then(data => {
-                const message = data.message;
-                document.getElementById('response-message').innerHTML = message + '<br>' + JSON.stringify(data.student);
-                document.getElementById('student-form').reset();  // Reset form after submission
-            })
-            .catch(error => {
-                document.getElementById('response-message').innerHTML = "An error occurred!";
-                console.error(error);
-            });
+            const studentUsername = document.getElementById('student-username').value;
+            const studentPassword = document.getElementById('student-password').value;
+
+            // Simulate an AJAX request to backend (You can replace this with actual backend request)
+            setTimeout(() => {
+                if (studentUsername === "student" && studentPassword === "student123") {
+                    document.getElementById('student-message').textContent = "Student login successful!";
+                    document.getElementById('student-message').style.color = "green";
+                } else {
+                    document.getElementById('student-message').textContent = "Invalid username or password!";
+                    document.getElementById('student-message').style.color = "red";
+                }
+            }, 1000);
+        });
+
+        // Handle Staff Login Form Submission
+        document.getElementById('staff-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const staffUsername = document.getElementById('staff-username').value;
+            const staffPassword = document.getElementById('staff-password').value;
+
+            // Simulate an AJAX request to backend (You can replace this with actual backend request)
+            setTimeout(() => {
+                if (staffUsername === "staff" && staffPassword === "staff123") {
+                    document.getElementById('staff-message').textContent = "Staff login successful!";
+                    document.getElementById('staff-message').style.color = "green";
+                } else {
+                    document.getElementById('staff-message').textContent = "Invalid username or password!";
+                    document.getElementById('staff-message').style.color = "red";
+                }
+            }, 1000);
         });
     </script>
 </body>
