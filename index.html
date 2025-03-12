@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hostel Management System - Login</title>
+    <title>HostZone - Login</title>
     <style>
-        /* Styling for the page */
+        /* General page styling */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -16,29 +16,30 @@
 
         h1 {
             text-align: center;
-            color: red;
+            color: white;
+            font-size: 2.5rem;
         }
 
-        /* Login container */
-        .login-container {
+        /* Background styling */
+        .main-container {
+            background-color: green;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
         }
 
         .login-box {
             width: 300px;
             padding: 20px;
-            background-color: #f4f4f4;
+            background-color: white;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            border: 1px solid #ddd;
+            text-align: center;
         }
 
         .login-box h2 {
-            text-align: center;
-            color: red;
+            color: green;
             margin-bottom: 20px;
         }
 
@@ -46,7 +47,7 @@
             display: block;
             font-size: 14px;
             margin-bottom: 8px;
-            color: red;
+            color: green;
         }
 
         .login-box input {
@@ -61,7 +62,7 @@
         .login-box button {
             width: 100%;
             padding: 10px;
-            background-color: red;
+            background-color: green;
             color: white;
             border: none;
             cursor: pointer;
@@ -69,17 +70,17 @@
         }
 
         .login-box button:hover {
-            background-color: darkred;
+            background-color: darkgreen;
         }
 
         .login-option {
-            text-align: center;
-            margin-top: 10px;
+            margin-top: 20px;
             font-size: 16px;
+            color: green;
         }
 
         .login-option a {
-            color: red;
+            color: green;
             text-decoration: none;
         }
 
@@ -87,7 +88,7 @@
             text-decoration: underline;
         }
 
-        /* Styles for success or error messages */
+        /* Success or error message styles */
         .message {
             margin-top: 20px;
             text-align: center;
@@ -101,66 +102,66 @@
         .message.error {
             color: red;
         }
-
     </style>
 </head>
 <body>
 
-    <h1>Hostel Management System</h1>
+    <div class="main-container">
+        <!-- Login Box -->
+        <div class="login-box" id="login-box">
+            <h2>Welcome to HostZone</h2>
+            <div id="login-option">
+                <button id="student-btn">Student Login</button>
+                <button id="staff-btn">Staff Login</button>
+            </div>
 
-    <!-- Login Container -->
-    <div class="login-container">
-        <div class="login-box">
-
-            <h2>Login</h2>
-
-            <!-- Login Form -->
-            <form id="login-form">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+            <form id="login-form" style="display: none;">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
 
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
 
-                <!-- Select login type -->
-                <label for="login-type">Login as:</label>
-                <select id="login-type" name="login-type" required>
-                    <option value="student">Student</option>
-                    <option value="staff">Staff</option>
-                </select>
-
                 <button type="submit">Login</button>
             </form>
 
-            <!-- Login Options -->
-            <div class="login-option">
-                <p>Not a member? <a href="#">Register</a></p>
-            </div>
-
-            <!-- Display message after login attempt -->
+            <!-- Display login message -->
             <div class="message" id="login-message"></div>
         </div>
     </div>
 
     <script>
-        // Handle Login Form Submission
+        // Show the login form when a user selects Student or Staff login
+        document.getElementById('student-btn').addEventListener('click', function() {
+            document.getElementById('login-box').querySelector('h2').textContent = 'Student Portal';
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('login-option').style.display = 'none';
+        });
+
+        document.getElementById('staff-btn').addEventListener('click', function() {
+            document.getElementById('login-box').querySelector('h2').textContent = 'Staff Portal';
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('login-option').style.display = 'none';
+        });
+
+        // Handle form submission for login
         document.getElementById('login-form').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const loginType = document.getElementById('login-type').value;
+            const portal = document.getElementById('login-box').querySelector('h2').textContent;
 
-            // Simulate the login process
-            if (loginType === "student" && username === "student1" && password === "password123") {
-                document.getElementById('login-message').textContent = `Welcome Student ${username}! You have successfully logged in.`;
-                document.getElementById('login-message').className = "message success";
-            } else if (loginType === "staff" && username === "staff1" && password === "staff123") {
-                document.getElementById('login-message').textContent = `Welcome Staff ${username}! You have successfully logged in.`;
-                document.getElementById('login-message').className = "message success";
+            // Simulate login verification
+            if (portal === 'Student Portal' && email === 'student@example.com' && password === 'student123') {
+                document.getElementById('login-message').textContent = 'Welcome to HostZone, Student!';
+                document.getElementById('login-message').className = 'message success';
+            } else if (portal === 'Staff Portal' && email === 'staff@example.com' && password === 'staff123') {
+                document.getElementById('login-message').textContent = 'Welcome to HostZone, Staff!';
+                document.getElementById('login-message').className = 'message success';
             } else {
-                document.getElementById('login-message').textContent = "Invalid username or password. Please try again.";
-                document.getElementById('login-message').className = "message error";
+                document.getElementById('login-message').textContent = 'Invalid email or password. Please try again.';
+                document.getElementById('login-message').className = 'message error';
             }
         });
     </script>
